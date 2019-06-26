@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='default.css')}}">
+    <title>PROJET-1 | {{titre}}</title>
+</head>
+
+<body>
+    {%block header%}
+    <header class="container-fluid">
+        <nav>
+            <h1>Espace d'emargement</h1>
+        </nav>
+    </header>
+    <div class="error-app">
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <ul>
+            {% for m in messages %}
+            <li>{{ m }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </div>
+    <div class="container">
+        {%endblock%} {%block main%}{%endblock%} {%block footer%}
+    </div>
+    {%endblock%}
+</body>
+
+</html>

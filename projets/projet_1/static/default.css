@@ -1,0 +1,10 @@
+header {
+    background-color: rgb(36, 117, 223);
+    color: white;
+}
+
+.error-app {
+    margin: 20px;
+    padding: 10px;
+    color: brown;
+}
