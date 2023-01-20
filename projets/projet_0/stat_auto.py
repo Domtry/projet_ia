@@ -23,8 +23,7 @@ def generate_yesterday_date():
     """
     mydate = date.today()
     day = lambda x : mydate.day - x
-    yesterday = date(mydate.year, mydate.month, day(1))
-    return yesterday
+    return date(mydate.year, mydate.month, day(1))
 
 
 def control_days(day):
@@ -70,13 +69,8 @@ def iter_pages(url_page, nb_page):
 def main():
     
     global max_name, max_price, min_name, min_price
-    
-    nb = 100
-    if len(sys.argv) < 2 :
-        pass
-    else :
-        nb = eval(sys.argv[1])
-        
+
+    nb = eval(sys.argv[1]) if len(sys.argv) >= 2 else 100
     print('launch scraping on ',nb,' query')
     count_car_today = 0
     try:
@@ -96,11 +90,11 @@ def main():
                         price = article.find('span', {'price'}).text.replace(' FCFA','')
                         info_car = article.find('span', {'address'}).text.replace('\n','')
                         the_day = control_days(str(article.time['datetime']))
-                        
+
                         if the_day is 1 and 'Voitures' in info_car:
                             count_car_today += 1
                             analysis(title, price)
-                            
+
         except Exception as error:
             responses.close()
             print('query not found please replay (!!)', error)
