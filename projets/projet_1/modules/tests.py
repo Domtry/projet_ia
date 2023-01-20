@@ -13,10 +13,7 @@ REGREX_PASSWORD_A = re.compile(r'^[a-zA-Z0-9-_]+$')
 
 def control(regrex, value):
     statu = regrex.search(value)
-    if statu is not None:
-        return True
-    else :
-        return False
+    return statu is not None
 
 def isName(value):
     return control(REGREX_NAME, value)

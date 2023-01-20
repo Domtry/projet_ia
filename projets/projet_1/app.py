@@ -18,11 +18,13 @@ db = SQLAlchemy(app)
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-            session['logout'] = True
-        else:
+        if (
+            request.form['username'] == 'admin'
+            and request.form['password'] == 'admin'
+        ):
             return redirect('home')
+        error = 'Invalid Credentials. Please try again.'
+        session['logout'] = True
     return render_template('pages/login.html', error=error)
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -64,49 +66,46 @@ def programmation():
 
 @app.route('/licence/algorithmique/emargement', methods=['GET', 'POST'])
 def emargement_al():
-	if request.method == 'POST':
-		dates = request.form['dates']
-		lecon = request.form['lecons']
-		absent = request.form['absents']
-		connex = psycopg2.connect(database="base", user = "vanick", password = "123456", host = "127.0.0.1", port = "5432")
-		cux = connex.cursor()
-		cux.execute('''CREATE TABLE IF NOT EXISTS emg (id INT PRIMARY KEY NOT NULL,  date VARCHAR(15) NOT NULL, lecons VARCHAR(50) NOT NULL, absents VARCHAR(50) NOT NULL)''')
-		cux.execute("INSERT INTO emg (date, lecons, absents) VALUES (%s,%s,%s)", (dates,lecon,absent))
-		connex.commit()
-		return redirect('pages/licence/algorithmique')
-		connex.close()
-	return render_template('pages/licence/emargement.html')
+    if request.method == 'POST':
+        dates = request.form['dates']
+        lecon = request.form['lecons']
+        absent = request.form['absents']
+        connex = psycopg2.connect(database="base", user = "vanick", password = "123456", host = "127.0.0.1", port = "5432")
+        cux = connex.cursor()
+        cux.execute('''CREATE TABLE IF NOT EXISTS emg (id INT PRIMARY KEY NOT NULL,  date VARCHAR(15) NOT NULL, lecons VARCHAR(50) NOT NULL, absents VARCHAR(50) NOT NULL)''')
+        cux.execute("INSERT INTO emg (date, lecons, absents) VALUES (%s,%s,%s)", (dates,lecon,absent))
+        connex.commit()
+        return redirect('pages/licence/algorithmique')
+    return render_template('pages/licence/emargement.html')
 
 
 @app.route('/licence/robotique/emargement', methods=['GET', 'POST'])
 def emargement_ro():
-	if request.method == 'POST':
-		dates = request.form['dates']
-		lecon = request.form['lecons']
-		absent = request.form['absents']
-		connex = psycopg2.connect(database="base", user = "vanick", password = "123456", host = "127.0.0.1", port = "5432")
-		cux = connex.cursor()
-		cux.execute('''CREATE TABLE IF NOT EXISTS emg (id INT PRIMARY KEY NOT NULL,  date VARCHAR(15) NOT NULL, lecons VARCHAR(50) NOT NULL, absents VARCHAR(50) NOT NULL)''')
-		cux.execute("INSERT INTO emg (date, lecons, absents) VALUES (%s,%s,%s)", (dates,lecon,absent))
-		connex.commit()
-		return redirect('pages/licence/robotique')
-		connex.close()
-	return render_template('pages/licence/emargement.html')
+    if request.method == 'POST':
+        dates = request.form['dates']
+        lecon = request.form['lecons']
+        absent = request.form['absents']
+        connex = psycopg2.connect(database="base", user = "vanick", password = "123456", host = "127.0.0.1", port = "5432")
+        cux = connex.cursor()
+        cux.execute('''CREATE TABLE IF NOT EXISTS emg (id INT PRIMARY KEY NOT NULL,  date VARCHAR(15) NOT NULL, lecons VARCHAR(50) NOT NULL, absents VARCHAR(50) NOT NULL)''')
+        cux.execute("INSERT INTO emg (date, lecons, absents) VALUES (%s,%s,%s)", (dates,lecon,absent))
+        connex.commit()
+        return redirect('pages/licence/robotique')
+    return render_template('pages/licence/emargement.html')
 
 @app.route('/licence/programmation/emargement', methods=['GET', 'POST'])
 def emargement_pro():
-	if request.method == 'POST':
-		dates = request.form['dates']
-		lecon = request.form['lecons']
-		absent = request.form['absents']
-		connex = psycopg2.connect(database="base", user = "vanick", password = "123456", host = "127.0.0.1", port = "5432")
-		cux = connex.cursor()
-		cux.execute('''CREATE TABLE IF NOT EXISTS emg (id INT PRIMARY KEY NOT NULL,  date VARCHAR(15) NOT NULL, lecons VARCHAR(50) NOT NULL, absents VARCHAR(50) NOT NULL)''')
-		cux.execute("INSERT INTO emg (date, lecons, absents) VALUES (%s,%s,%s)", (dates,lecon,absent))
-		connex.commit()
-		return redirect('pages/licence/programmation')
-		connex.close()
-	return render_template('pages/licence/emargement.html')
+    if request.method == 'POST':
+        dates = request.form['dates']
+        lecon = request.form['lecons']
+        absent = request.form['absents']
+        connex = psycopg2.connect(database="base", user = "vanick", password = "123456", host = "127.0.0.1", port = "5432")
+        cux = connex.cursor()
+        cux.execute('''CREATE TABLE IF NOT EXISTS emg (id INT PRIMARY KEY NOT NULL,  date VARCHAR(15) NOT NULL, lecons VARCHAR(50) NOT NULL, absents VARCHAR(50) NOT NULL)''')
+        cux.execute("INSERT INTO emg (date, lecons, absents) VALUES (%s,%s,%s)", (dates,lecon,absent))
+        connex.commit()
+        return redirect('pages/licence/programmation')
+    return render_template('pages/licence/emargement.html')
 
 if __name__ == '__main__':
 	app.secret_key = os.urandom(12)

@@ -15,17 +15,14 @@ root.secret_key = 'projet_IA_v1'
 @root.route('/', methods=['GET', 'POST'])
 @root.route('/login/', methods=['GET', 'POST'])
 def login_page():
-    if request.method == 'POST':
-        
-        user_name = request.form['name']    
-        password = request.form['password']
-        if test.isName(user_name) and test.isPassword_A(password) :
-            return redirect(url_for('profil', name=user_name))    
-        else :
-            flash('le nom ou mot de passe n\'est pas correct', 'erreur')
-            return redirect(url_for('login_page'))  
-    else :
+    if request.method != 'POST':
         return render_template('login.html')
+    user_name = request.form['name']
+    password = request.form['password']
+    if test.isName(user_name) and test.isPassword_A(password):
+        return redirect(url_for('profil', name=user_name))
+    flash('le nom ou mot de passe n\'est pas correct', 'erreur')
+    return redirect(url_for('login_page'))
 
   
 @root.route('/profil/<name>', methods=['GET'])
